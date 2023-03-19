@@ -17,12 +17,12 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
     }
   } ?>
 </head>
-<body style="background:#96D678;background-size: 100%">
+<body style="background:#e0e0e0;background-size: 100%">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
- <a class="navbar-brand" href="#">
-    <img src="images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-   <!--  <i class="d-inline-block  fa fa-building fa-fw"></i> -->Online Banking
-  </a>
+    <a class="navbar-brand" href="#">
+        <ion-icon name="card-outline" class="d-inline-block align-top" size="large"></ion-icon>
+        Online Banking
+    </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -49,12 +49,12 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
   $row = $array->fetch_assoc();
  ?>
 <div class="container">
-<div class="card w-100 text-center shadowBlue">
+<div class="card w-100 text-cente">
   <div class="card-header">
-    Account profile for <?php echo $row['name'];echo "<kbd>#";echo $row['accountNo'];echo "</kbd>"; ?>
+    Account profile for <?php echo $row['name'];echo "<kbd class='mx-2'>#";echo $row['accountNo'];echo "</kbd>"; ?>
   </div>
   <div class="card-body">
-    <table class="table table-bordered">
+    <table class="table table-borderless">
       <tbody>
         <tr>
           <td>Name</td>
@@ -86,9 +86,10 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
     </table>
   </div>
   <div class="card-footer text-muted">
-    Online Banking
+      <?php echo bankName ?>
   </div>
 </div>
-
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
