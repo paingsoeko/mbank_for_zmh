@@ -5,7 +5,13 @@
 	<?php require 'assets/autoloader.php'; ?>
 	<?php require 'assets/function.php'; ?>
 	<?php
-    $con = new mysqli('localhost','root','','mybank');
+
+    $con = new mysqli('localhost', 'kopaing', 'password', 'mybank');
+	// if($con->connect_errno){
+	// 	echo 'Failed';
+	// 	$con->connect_error;
+	// 	exit();
+	// }
 
 		$error = "";
 		if (isset($_POST['userLogin']))
@@ -14,14 +20,27 @@
   			$user = $_POST['email'];
 		    $pass = $_POST['password'];
 		   
-		    $result = $con->query("select * from userAccounts where email='$user' AND password='$pass'");
+		    $result = $con->query("select * from useraccounts where email='$user' AND password='$pass'");
 		    if($result->num_rows>0)
 		    { 
-		      session_start();
-		      $data = $result->fetch_assoc();
+				$data = $result->fetch_assoc();
+		      if($data['is_first_login'] == 1){
+				session_start();
+		    
+				$_SESSION['userId']=$data['id'];
+				$_SESSION['user'] = $data;
+  
+  
+				header('location:change_pwd.php');
+			  }else{
+				session_start();
+		    
 		      $_SESSION['userId']=$data['id'];
 		      $_SESSION['user'] = $data;
+
+
 		      header('location:index.php');
+			  }
 		     }
 		    else
 		    {

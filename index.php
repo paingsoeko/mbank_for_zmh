@@ -37,14 +37,15 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
     
   </div>
 </nav>
-<div class="row w-100 mt-4" >
+<div class="row w-100 mt-5" >
   <div class="col" style="padding: 22px;padding-top: 0">
     <div class="bg-white jumbotron " style="padding: 25px;min-height: 241px;max-height: 241px">
   <h4 class="display-5">Welecome to Online Bank</h4>
   <p  class="lead alert alert-warning"><b>Latest Notification:</b>
 
   <?php 
-      $array = $con->query("select * from notice where userId = '$_SESSION[userId]' order by date desc");
+  $id = $_SESSION['userId'];
+      $array = $con->query("select * from notice where userId = '$id' order by date desc");
       if ($array->num_rows > 0)
       {
         $row = $array->fetch_assoc();
@@ -54,6 +55,7 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
       }
       else
         echo "<div class='alert alert-info'>Notice box empty</div>";
+        
      ?></p>
   
 </div>
@@ -125,3 +127,4 @@ if(!isset($_SESSION['userId'])){ header('location:login.php');}
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+
