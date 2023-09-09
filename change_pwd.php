@@ -22,18 +22,25 @@ if(!isset($_SESSION['userId'])){
 		$old_pwd = $_POST['old_pwd'];
 		$new_pass = $_POST['new_password'];
 		$retype_pass = $_POST['retype_password'];
+		$hash_password = password_hash($new_pass, PASSWORD_DEFAULT);
 	   
-		$result = $con->query("select * from useraccounts where id='$userId' AND password='$old_pwd'");
+		$result = $con->query("select * from useraccounts where id='$userId'");
 		if($result->num_rows>0)
 		{ 
 			if($new_pass == $retype_pass){
+
 			$data = $result->fetch_assoc();
-			$newId = $data['id'];
-			$result = $con->query("UPDATE `useraccounts` SET `is_first_login` = '0', `password` = '$new_pass' WHERE `useraccounts`.`id` = $newId");
+			if(password_verify( $old_pwd, $data['password'])){
+				$newId = $data['id'];
+			$result = $con->query("UPDATE `useraccounts` SET `is_first_login` = '0', `password` = '$hash_password' WHERE `useraccounts`.`id` = $newId");
 			if($result){
 				session_start();
 				$_SESSION['userId']=$data['id'];
 				header('location:index.php');
+			}
+			
+			}else{
+				$error = "<div class='alert alert-warning text-center rounded-0'>Your password wrong try again!</div>";
 			}
 			}else{
 				$error = "<div class='alert alert-warning text-center rounded-0'>Not match comfirm password try again!</div>";
@@ -41,7 +48,7 @@ if(!isset($_SESSION['userId'])){
 		 }
 		else
 		{
-		  $error = "<div class='alert alert-warning text-center rounded-0'>Your password wrong try again!</div>";
+		  $error = "<div class='alert alert-warning text-center rounded-0'>Something wrong try again!</div>";
 		}
 	}
 

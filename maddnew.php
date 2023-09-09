@@ -47,7 +47,10 @@ if(!isset($_SESSION['managerId'])){ header('location:login.php');}
 <?php
 if (isset($_POST['saveAccount']))
 {
-  if (!$con->query("insert into useraccounts (name,cnic,accountNo,accountType,city,address,email,password,balance,source,number,branch) values ('$_POST[name]','$_POST[cnic]','$_POST[accountNo]','$_POST[accountType]','$_POST[city]','$_POST[address]','$_POST[email]','$_POST[password]','$_POST[balance]','$_POST[source]','$_POST[number]','$_POST[branch]')")) {
+ 
+  $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  
+  if (!$con->query("insert into useraccounts (name,cnic,accountNo,accountType,city,address,email,password,balance,source,number,branch) values ('$_POST[name]','$_POST[cnic]','$_POST[accountNo]','$_POST[accountType]','$_POST[city]','$_POST[address]','$_POST[email]','$password','$_POST[balance]','$_POST[source]','$_POST[number]','$_POST[branch]')")) {
     echo "<div claass='alert alert-success'>Failed. Error is:".$con->error."</div>";
   }
   else
